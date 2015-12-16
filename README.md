@@ -19,6 +19,10 @@ web.py 的贴吧
 2. cp index.py.default index.py && cp config/config.py.default config/config.py 并修改相应配置
 
 3. 导入post_bar_init.sql 至数据库
+>sqlite3 post_bar.
+sqlite> .read post_bar_init_sqlite.sql
+sqlite> .exit
+
 
 4. Mac 下用系统 apache 和 python 没有部署成功过~。建议在 linux 和 win 下部署。 Mac 下默认的 python 版本是 2.7.2 从官网下载升级到2.7.3之后能控制台运行
 

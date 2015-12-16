@@ -38,3 +38,7 @@ web/
 # vim temporary files
 *.swp
 
+# sqlite3 tools
+sqlite3.exe
+# database file
+post_bar.db

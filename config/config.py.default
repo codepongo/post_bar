@@ -3,6 +3,7 @@ import os
 import web
 
 db = web.database(dbn='mysql', db='post_bar', user='root', pw='rabbit')
+#db = web.database(dbn='sqlite', db='post_bar.db')
 render = web.template.render(os.path.abspath(os.path.dirname(__file__)) + '/../tpl/', base='layout', cache = False)
 admin_render = web.template.render(os.path.abspath(os.path.dirname(__file__)) + '/../tpl/admin', base='layout')
 
