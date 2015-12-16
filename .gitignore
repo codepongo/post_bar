@@ -31,3 +31,10 @@ pip-log.txt
 sessions
 index.py
 .DS_store
+
+#webpy
+web/
+
+# vim temporary files
+*.swp
+
