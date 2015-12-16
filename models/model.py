@@ -19,7 +19,7 @@ class model:
     
     def get_all(self, conditions = None, order = None, limit = None, offset = None):
         where = dict2where(conditions)
-        return db.select(self._tb, where = where, order = order, limit = limit, offset = offset)
+        return db.select(self._tb, where = where, order = order, limit = limit, offset = offset).list()
     
     def insert(self, values = None):
         def q(x): return "(" + x + ")"
@@ -60,7 +60,8 @@ class model:
         return db.query(sql)
 
     def last_insert_id(self):
-        return db.query('select last_insert_id() as id')[0].id
+        #return db.query('select last_insert_id() as id')[0].id
+        return db.query('select last_insert_rowid() as id')[0].id
     
     def table_name(self):
         return self._tb

@@ -104,13 +104,7 @@ class create_cat(admin):
         return admin_render.create_cat('添加新分类', self.crumb.output(), self.form)
     def POST(self):
         if self.form.validates():
-            if cat_model().unique_insert({'name':self.form.d.name}):
-                # 为了保证不插入空的display_name的分类，故此
-                try:
-                    cat_model().update({'name':self.form.d.name}, {'display_name':self.form.d.display_name, 'description':self.form.d.description})
-                except:
-                    cat_model().delete({'name':self.form.d.name})
-                
+            if cat_model().unique_insert({'name':self.form.d.name, 'display_name':self.form.d.display_name, 'description':self.form.d.description}):
                 web.SeeOther('/admin/cat/'+self.form.d.name)
             else:
                 return admin_render.create_cat('分类名已存在', self.crumb.output(), self.form)
@@ -223,13 +217,7 @@ class create_node(admin):
             self.crumb.append('分类不存在')
             return admin_render.cat_nf('分类不存在', self.crumb.output())
         if self.form.validates():
-            if node_model().unique_insert({'name':self.form.d.name}):
-                # 为了保证不插入空的display_name的节点，故此
-                try:
-                    node_model().update({'name':self.form.d.name}, {'category_id':cat.id, 'display_name':self.form.d.display_name, 'description':self.form.d.description})                
-                except:
-                    node_model().delete({'name':self.form.d.name})
-                
+            if node_model().unique_insert({'name':self.form.d.name, 'category_id':cat.id, 'display_name':self.form.d.display_name, 'description':self.form.d.description}):
                 web.SeeOther('/admin/node/'+self.form.d.name)
             else:
                 return admin_render.create_cat('节点名已存在', self.crumb.output(), self.form)
