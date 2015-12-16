@@ -33,7 +33,7 @@ index.py
 .DS_store
 
 #webpy
-web/
+web
 
 # vim temporary files
 *.swp
