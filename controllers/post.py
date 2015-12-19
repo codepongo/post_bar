@@ -114,6 +114,62 @@ class create:
         user_model().update_session(session.user_id)
         raise web.seeother('/post/' + str(post_id))
 
+# 编辑帖子
+class edit:
+    
+    def __init__(self):
+        self.crumb = Crumb()
+        self.form = web.form.Form(
+            web.form.Textarea('title', notnull, class_='mle', description=''),
+            web.form.Textarea('content', notnull, class_='mle tall', description=''),
+            web.form.Button('编辑', class_='super normal button')
+        )
+    
+    def GET(self, post_id):
+        if session.user_id is None:
+            raise web.SeeOther('/login?next=/edit/post/' + post_id)
+        conditions = {'id' : int(post_id)}
+        post = post_model().get_one(conditions)
+        if session.user_id != post.user_id:
+            raise web.SeeOther('/login?next=/edit/post/' + post_id)
+        self.crumb.append(post["title"], '/post/'+post_id)
+        self.crumb.append('编辑主题')
+        if post is None:
+            self.crumb.claer()
+            return render.not_found('节点未找到', '节点未找到')
+        title = '编辑主题'
+        self.form.title.value = post.title
+        self.form.content.value = post.content
+        return render.edit_post(self.form, title, self.crumb.output())
+    
+    def POST(self, post_id):
+        if session.user_id is None:
+            raise web.SeeOther('/login?next=/edit/post/' + post_id)
+        conditions = {'id' : int(post_id)}
+        post = post_model().get_one(conditions)
+        if post is None:
+            return render.not_found('节点未找到', '节点未找到')
+        if not self.form.validates():
+            return render.create_post(self.form, '创建失败， 请重创:D', self.crumb.output())
+        user_model().update_session(session.user_id)
+        length, cost = money_model().cal_post(self.form.d.content)
+        if session.money < cost:
+            self.crumb.append('财富不够')
+            return render.no_money('财富不够', '你的财富值不够，不能创建改主题 :(', self.crumb.output())
+        title = strip_tags(self.form.d.title)
+        content = html2db(self.form.d.content)
+        content, receiver_list = notify_model().convert_content(content)
+        create_time = time.time()
+        post_model().update({'id':int(post_id)}, {'title' : title, 'content' : content, 'node_id' : post.node_id, 'time' : create_time, 'last_update':create_time, 'user_id' : session.user_id})
+        # money
+        money_type_id = money_type_model().get_one({'name':'post'})['id']
+        money_model().insert({'user_id':session.user_id, 'money_type_id':money_type_id, 'amount':-cost, 'length':length, 'balance':user_model().update_money(session.user_id, -cost), 'foreign_id':post_id})
+        # notify
+        receiver_list = list_diff(receiver_list, [session.name])
+        notify_model().insert_notify(session.user_id, receiver_list, 'post_at', post_id)
+        user_model().update_session(session.user_id)
+        raise web.seeother('/post/' + str(post_id))
+
 # 收藏帖子
 class fav:
     

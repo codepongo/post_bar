@@ -14,10 +14,12 @@ $var widgets=['user_panel_widget']
     </div>
     <h1>$:post.title</h1>
     <small class="gray">By <a href="/profile/$user.name">$user.name</a> at $helper.stamp2during(post.time), $post.views 次点击 &nbsp; </small>
+    $if user.id == session.user_id: 
+        <a href="/edit/post/$post.id" class="super normal button">编辑</a>
     </div>
     <div class="cell">
         <div class="topic_content">
-        $:post.content
+            $:post.content.replace('\n', '<br />')
         </div>
     </div>
 $if session.user_id:

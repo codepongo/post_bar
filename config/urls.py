@@ -11,6 +11,8 @@ urls = (
     '/post/(\d+)', pre_fix + 'post.view',
     # 创建主题
     '/create/([a-z\-]*)', pre_fix + 'post.create',
+    # 编辑主题
+    '/edit/post/(\d+)', pre_fix + 'post.edit',
     # 感谢主题
     '/post/thanks', pre_fix + 'post.thanks',
     # 节点主题列表
