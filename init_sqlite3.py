@@ -75,22 +75,22 @@ VALUES
 ''').replace('''
 INSERT INTO `site` (`id`, `key`, `value`)
 VALUES
-	(1,'title','Post Bar你妹'),
-	(2,'description','Web.py 的一个贴吧'),
+	(1,'title','CodePongo BBS'),
+	(2,'description','CodePongo 论坛'),
 	(3,'cookie_expires','604800'),
-	(4,'site_url','127.0.0.1:8888');''',
+	(4,'site_url','bbs.codepongo.com');''',
 '''
 INSERT INTO `site` (`id`, `key`, `value`)
 VALUES
-	(1,'title','Post Bar你妹');
+	(1,'title','CodePongo BBS');
 INSERT INTO `site` (`id`, `key`, `value`)
 VALUES
-	(2,'description','Web.py 的一个贴吧');
+	(2,'description','CodePongo 论坛');
 INSERT INTO `site` (`id`, `key`, `value`)
 VALUES
 	(3,'cookie_expires','604800');
 INSERT INTO `site` (`id`, `key`, `value`)
 VALUES
-	(4,'site_url','127.0.0.1:8888');''')
+	(4,'site_url','bbs.codepongo.com');''')
     db.executescript(sql)
 db.close()

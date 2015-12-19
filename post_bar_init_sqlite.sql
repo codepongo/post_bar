@@ -284,10 +284,10 @@ CREATE TABLE `site` (
 
 INSERT INTO `site` (`id`, `key`, `value`)
 VALUES
-	(1,'title','Post Bar你妹'),
-	(2,'description','Web.py 的一个贴吧'),
+	(1,'title','CodePongo BBS'),
+	(2,'description','CodePongo 论坛'),
 	(3,'cookie_expires','604800'),
-	(4,'site_url','127.0.0.1:8888');
+	(4,'site_url','bbs.codepongo.com');
 
 /*!40000 ALTER TABLE `site` ENABLE KEYS */;
 --UNLOCK TABLES;
