@@ -1,0 +1,1 @@
+gcc Image.c -Wno-unused-value -shared -lpython2.7 -L/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7 -I /System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7  -o Image.so
