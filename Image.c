@@ -348,40 +348,6 @@ get_sample(unsigned char *data, int width, int height, int depth, int *count)
     return result;
 }
 
-unsigned char *
-make_palette(unsigned char *data, int x, int y, int n, int c)
-{
-    int i;
-    unsigned char *palette;
-    int sample_count = 256;
-    stbex_pixel *sample;
-    stbex_cube *cube;
-    int nresult = 0;
-    int ncount;
-    int count = 0;
-
-    sample = get_sample(data, x, y, n, &sample_count);
-    cube = (stbex_cube *)stbex_cube_new(sample, sample_count, NULL);
-
-    for (ncount = sample_count / 2; ncount > 8; ncount /= 2) {
-        count += stbex_cube_hatch(cube, ncount);
-    }
-
-    stbex_pixel results[sample_count];
-    stbex_cube_get_sample(cube, sample, (stbex_pixel *)results, &nresult);
-    free(sample);
-
-/*
-    printf("[%d -> %d]\n", sample_count, count); fflush(0);
-*/
-
-    palette = malloc(c * n);
-    for (i = 0; i < c; i++) {
-        memcpy(palette + i * 3, results + i, 3); 
-    }
-    return palette;
-}
-
 void add_offset(unsigned char *data, int i, int n, int roffset, int goffset, int boffset) {
     int r = data[i * n + 0] + roffset;
     int g = data[i * n + 1] + goffset;
@@ -411,98 +377,6 @@ void add_offset(unsigned char *data, int i, int n, int roffset, int goffset, int
     data[i * n + 2] = (unsigned char)b;
 }
 
-
-unsigned char *
-apply_palette(unsigned char *data,
-              int width, int height, int depth,
-              unsigned char *palette, int c,
-              int use_diffusion)
-{
-    int i;
-    int j;
-    int x, y;
-    int r = 0, g = 0, b = 0;
-    int rdiff, gdiff, bdiff;
-    int roffset, goffset, boffset;
-    int distant;
-    int diff;
-    int index;
-    unsigned char *result;
-
-    result = malloc(width * height);
-
-    for (y = 0; y < height; ++y) {
-        for (x = 0; x < width; ++x) {
-            i = y * width + x;
-            r = data[i * depth + 0];
-            g = data[i * depth + 1];
-            b = data[i * depth + 2];
-            diff = 256 * 256 * 3;
-            index = -1;
-            j = 1;
-            while (1) {
-                rdiff = r - (int)palette[j * 3 + 0];
-                gdiff = g - (int)palette[j * 3 + 1];
-                bdiff = b - (int)palette[j * 3 + 2];
-                distant = rdiff * rdiff + gdiff * gdiff + bdiff * bdiff;
-                if (distant < diff) {
-                    diff = distant;
-                    index = j;
-                }
-                j++;
-                if (j == c) {
-                    break;
-                }
-            }
-            if (index > 0) {
-                result[i] = index;
-                if (1) {
-                    roffset = (int)data[i * depth + 0] - (int)palette[index * 3 + 0];
-                    goffset = (int)data[i * depth + 1] - (int)palette[index * 3 + 1];
-                    boffset = (int)data[i * depth + 2] - (int)palette[index * 3 + 2];
-                    if (y < height - 1) {
-                        add_offset(data, i + width, depth,
-                                   roffset * 5 / 16,
-                                   goffset * 5 / 16,
-                                   boffset * 5 / 16);
-                        if (x > 1) {
-                            add_offset(data, i + width - 1, depth,
-                                       roffset * 3 / 16,
-                                       goffset * 3 / 16,
-                                       boffset * 3 / 16);
-                            roffset -= roffset * 3 / 16;
-                            goffset -= goffset * 3 / 16;
-                            boffset -= boffset * 3 / 16;
-                        }
-                        if (x < width - 1) {
-                            add_offset(data, i + width + 1, depth,
-                                       roffset * 1 / 16,
-                                       goffset * 1 / 16,
-                                       boffset * 1 / 16);
-                        }
-                    }
-                    if (x < width - 1) {
-                        roffset -= roffset * 5 / 16;
-                        goffset -= goffset * 5 / 16;
-                        boffset -= boffset * 5 / 16;
-                        roffset -= roffset * 3 / 16;
-                        goffset -= goffset * 3 / 16;
-                        boffset -= boffset * 3 / 16;
-                        roffset -= roffset * 1 / 16;
-                        goffset -= goffset * 1 / 16;
-                        boffset -= boffset * 1 / 16;
-                        add_offset(data, i + 1, depth,
-                                   roffset,
-                                   goffset,
-                                   boffset);
-                    }
-                }
-            }
-        }
-    }
-    return result;
-}
-
 /*****************************************************************************
  *
  * Image object
@@ -512,15 +386,10 @@ apply_palette(unsigned char *data,
 /** Image object */
 typedef struct _Image {
     PyObject_HEAD
-    PyObject *data;
-    PyObject *palette;
     unsigned char *original;
     int width;
     int height;
     int depth;
-    int expected_width;
-    int expected_height;
-    int expected_depth;
 } Image;
 
 /** allocator */
@@ -531,15 +400,10 @@ Image_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
     if (self == NULL) {
         return NULL;
     }
-    self->data = Py_None;
-    self->palette = Py_None;
     self->original = NULL;
     self->width = 0;
     self->height = 0;
     self->depth = 0;
-    self->expected_width = 0;
-    self->expected_height = 0;
-    self->expected_depth = 0;
 
     return (PyObject *)self;
 }
@@ -548,37 +412,29 @@ Image_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
 static void
 Image_dealloc(Image *self)
 {
-    Py_XDECREF(self->data);
-    Py_XDECREF(self->palette);
-
+    printf("%p - %s\n", self, __FUNCTION__);
     if (self->original) {
         stbi_image_free(self->original);
-        self->original = NULL;
     }
 
     Py_TYPE(self)->tp_free((PyObject*)self);
 }
 
 /** initializer */
-static int
+/*
+ static int
 Image_init(Image *self, PyObject *args, PyObject *kwds)
 {
-    PyObject *data = NULL;
-    PyObject *palette = NULL;
     PyObject *tmp;
    
     static char *kwlist[] = {
-        "data",
-        "palette",
         "width",
         "height",
         "depth",
         NULL
     };
    
-    int result = PyArg_ParseTupleAndKeywords(args, kwds, "|Siii", kwlist,
-                                             &data,
-                                             &palette,
+    int result = PyArg_ParseTupleAndKeywords(args, kwds, "|iii", kwlist,
                                              &self->width,
                                              &self->height,
                                              &self->depth);
@@ -587,44 +443,17 @@ Image_init(Image *self, PyObject *args, PyObject *kwds)
         return -1;
     }
    
-    if (data) {
-        tmp = self->data;
-        Py_DECREF(tmp);
-        Py_INCREF(data);
-        self->data = data;
-    }
-   
-    if (palette) {
-        tmp = self->palette;
-        Py_DECREF(tmp);
-        Py_INCREF(data);
-        self->palette = data;
-    }
-   
     return 0;
 }
-
+*/
 
 static PyMemberDef Image_members[] = {
     { NULL } 
 };
 
-static PyObject *
-Image_getdata(Image *self)
-{
-    Py_INCREF(self->data);
-    return self->data;
-}
 
 static PyObject *
-Image_getpalette(Image *self)
-{
-    Py_INCREF(self->palette);
-    return self->palette;
-}
- 
-static PyObject *
-Image_convert(PyObject *self, PyObject *args, PyObject *kwds)
+Image_clone(PyObject *self, PyObject *args, PyObject *kwds)
 {
     PyTypeObject *type = (PyTypeObject *)PyObject_Type(self);
 
@@ -639,29 +468,18 @@ Image_convert(PyObject *self, PyObject *args, PyObject *kwds)
         return NULL;
     }
 
-    if (src->data != Py_None) {
-        Py_INCREF(src->data);
-        dest->data = src->data;
-    }
-    if (src->palette != Py_None) {
-        Py_INCREF(src->palette);
-        dest->palette = src->palette;
-    }
     dest->width = src->width;
     dest->height = src->height;
     dest->depth = src->depth;
     dest->original = malloc(src->width * src->height * src->depth);
     memcpy(dest->original, src->original, src->width * src->height * src->depth);
-    dest->expected_width = src->expected_width;
-    dest->expected_height = src->expected_height;
-    dest->expected_depth = src->expected_depth;
 
     return (PyObject *)dest;
 }
 
 static PyObject *
 Image_write_png(PyObject* self, PyObject* args) {
-    printf("%s\n", __FUNCTION__);
+    printf("%p - %s\n", self, __FUNCTION__);
     Image* img = (Image*)self;
     const char* file;
     int unused;
@@ -670,25 +488,23 @@ Image_write_png(PyObject* self, PyObject* args) {
         return NULL;
     }
     int r = stbi_write_png(file, img->width, img->height, img->depth, img->original, 0);
-    printf("w:%d h:%d d:%d\n", img->width, img->height, img->depth);
 
-    return self;
+    Py_RETURN_NONE;
 }
 
 static PyObject *
 Image_crop(PyObject *self, PyObject *args)
 {
+    printf("%p - %s\n", self, __FUNCTION__);
     PyTypeObject *type = (PyTypeObject *)PyObject_Type(self);
 
     Image *src = (Image *)self;
     Image *dest;
-    unsigned char *data;
     int left, top, right, bottom;
     int x, y, width, height;
     int gx, gy;
     int rx, ry;
     const size_t colors = 256;
-    unsigned char *palette;
     stbex_pixel *p;
 
     if (!PyArg_ParseTuple(args, "(iiii)", &left, &top, &right, &bottom)) {
@@ -714,30 +530,22 @@ Image_crop(PyObject *self, PyObject *args)
     }
     dest->width = width;
     dest->height = height;
-    dest->expected_width = src->expected_width;
-    dest->expected_height = src->expected_height;
-    dest->expected_depth = src->expected_depth;
 
     return (PyObject *)dest;
 }
 
-
-
-
 static PyObject *
 Image_thumbnail(PyObject *self, PyObject *args)
 {
-    printf("%s\n", __FUNCTION__);
+    printf("%p - %s\n", self, __FUNCTION__);
     PyTypeObject *type = (PyTypeObject *)PyObject_Type(self);
 
     Image *src = (Image *)self;
     Image *dest;
-    unsigned char *data;
     int width, height;
     int gx, gy;
     int rx, ry;
     const size_t colors = 256;
-    unsigned char *palette;
     stbex_pixel *p;
     int unused = 0;
     if (!PyArg_ParseTuple(args, "(ii)i", &width, &height, &unused)) {
@@ -750,24 +558,17 @@ Image_thumbnail(PyObject *self, PyObject *args)
         return NULL;
     }
     dest->depth = src->depth;
-    printf("w:%d h:%d d:%d\n", width, height, src->depth);
     dest->original = malloc(width * height * src->depth);
     int rlt = stbir_resize_uint8(src->original, src->width, src->height, 0, dest->original, width, height, 0, dest->depth);
 
     dest->width = width;
     dest->height = height;
-    dest->expected_width = src->expected_width;
-    dest->expected_height = src->expected_height;
-    dest->expected_depth = src->expected_depth;
-    printf("w:%d h:%d d:%d\n", width, height, src->depth);
 
     return (PyObject *)dest;
 }
 
 static PyMethodDef Image_methods[] = {
-    {"getdata", (PyCFunction)Image_getdata, METH_NOARGS, "return pixel data" },
-    {"getpalette", (PyCFunction)Image_getpalette, METH_NOARGS, "return palette data" },
-    {"convert", (PyCFunction)Image_convert, METH_KEYWORDS, "convert image data" },
+    {"clone", (PyCFunction)Image_clone, METH_KEYWORDS, "copy image data" },
     {"thumbnail", Image_thumbnail, METH_VARARGS, "resize image data" },
     {"crop", Image_crop, METH_VARARGS, "cut image" },
     {"save", Image_write_png, METH_VARARGS|METH_KEYWORDS, "save image to file as png format" },
@@ -824,7 +625,7 @@ static PyTypeObject ImageType = {
     0,                                        /* tp_descr_get */
     0,                                        /* tp_descr_set */
     0,                                        /* tp_dictoffset */
-    (initproc)Image_init,                     /* tp_init */
+    0,//(initproc)Image_init,                     /* tp_init */
     0,                                        /* tp_alloc */
     Image_new,                                /* tp_new */
 };
@@ -842,8 +643,6 @@ open(PyObject *self, PyObject *args)
     char *filename;
     const char *tp_name;
     unsigned char *data;
-    unsigned char *imagedata;
-    unsigned char *palette;
     const size_t colors = 256;
 
     if (!PyArg_ParseTuple(args, "O", &file)) {
@@ -874,31 +673,17 @@ open(PyObject *self, PyObject *args)
         return NULL;
     }
 
-    //palette = make_palette(data, x, y, n, colors);
-    //imagedata = apply_palette(data, x, y, n, palette, colors, 1);
 
     Image *pimage = (Image *)ImageType.tp_alloc(&ImageType, 0);
     if (pimage == NULL) {
         return NULL;
     }
 
-    //pimage->data = PyByteArray_FromStringAndSize((char const *)imagedata, x * y);
-    //pimage->palette = PyByteArray_FromStringAndSize((char const *)palette, colors * 3);
     pimage->original = data;
-    //if (pimage->data == NULL) {
-    //    Py_DECREF(pimage);
-    //    return NULL;
-    //}
     pimage->width = x;
     pimage->height = y;
     pimage->depth = n;
-    pimage->expected_width = x;
-    pimage->expected_height = y;
-    pimage->expected_depth = n;
-
-    //free(palette);
-    //free(imagedata);
-
+    printf("%p - %s\n", pimage, __FUNCTION__);
     return (PyObject *)pimage;
 }
 
