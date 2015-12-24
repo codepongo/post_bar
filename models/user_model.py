@@ -83,12 +83,9 @@ class user_model(model):
         except:
             pass
         im = Image.open(path+'tmp/'+filename)
-        im.thumbnail((73, 73), Image.ANTIALIAS)
-        im.save(path+'big/'+filename, quality = 100)
-        im.thumbnail((48, 48), Image.ANTIALIAS)
-        im.save(path+'normal/'+filename, quality = 100)
-        im.thumbnail((24, 24), Image.ANTIALIAS)
-        im.save(path+'tiny/'+filename, quality = 100)
+        im.thumbnail((73, 73), Image.ANTIALIAS).save(path+'big/'+filename, quality = 100)
+        im.thumbnail((48, 48), Image.ANTIALIAS).save(path+'normal/'+filename, quality = 100)
+        im.thumbnail((24, 24), Image.ANTIALIAS).save(path+'tiny/'+filename, quality = 100)
         del im, region
         os.remove(path+'tmp/'+filename)
         self.update({'id':user_id}, {'avatar':filename})
