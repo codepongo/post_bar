@@ -633,7 +633,7 @@ static PyTypeObject ImageType = {
 /*
 */
 static PyObject *
-open(PyObject *self, PyObject *args)
+open_image(PyObject *self, PyObject *args)
 {
     int x, y, n;
     PyObject *file;
@@ -690,7 +690,7 @@ open(PyObject *self, PyObject *args)
 static char Image_doc[] = "A simple python image library which likes PIL.\n";
 
 static PyMethodDef methods[] = {
-    { "open", open, METH_VARARGS, "load image by filename\n" },
+    { "open", open_image, METH_VARARGS, "load image by filename\n" },
     { NULL, NULL, 0, NULL}
 };
 

@@ -45,4 +45,9 @@ r.bat
 # database file
 post_bar.db
 
+# dynamic link library (shared object)file
 Image.so
+Image.dll
+
+# object file
+*.obj
