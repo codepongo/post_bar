@@ -2,15 +2,15 @@
 import os
 import web
 
+#mysql database
 #db = web.database(dbn='mysql', db='post_bar', user='root', pw='rabbit')
+#sqlite database
 db = web.database(dbn='sqlite', db='post_bar.db')
+
 render = web.template.render(os.path.abspath(os.path.dirname(__file__)) + '/../tpl/', base='layout', cache = False)
 admin_render = web.template.render(os.path.abspath(os.path.dirname(__file__)) + '/../tpl/admin', base='layout')
 
 web.config.debug = True
-
-# 模板全局变量
-site_title = 'Post_bar'
 
 # 表单验证规则
 notnull = web.form.Validator("必填", bool)

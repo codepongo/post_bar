@@ -15,18 +15,26 @@ web.py 的贴吧
 ---------------------
 
 1. Apache + mod_wsgi + mysql 环境
+支持apache + mod_wsgi + sqlite
 
 2. cp index.py.default index.py && cp config/config.py.default config/config.py 并修改相应配置
 
 3. 导入post_bar_init.sql 至数据库
->sqlite3 post_bar.
+>sqlite3 post_bar.db
 sqlite> .read post_bar_init_sqlite.sql
 sqlite> .exit
 
 
 4. Mac 下用系统 apache 和 python 没有部署成功过~。建议在 linux 和 win 下部署。 Mac 下默认的 python 版本是 2.7.2 从官网下载升级到2.7.3之后能控制台运行
 
-5. 环境依赖 必须：python 2.7.3、mysql-python、PIL、webpy 0.37、mysql，可选 Apache、mode_wsgi
+5. 环境依赖 必须：python 2.7.3 webpy 0.37 可选：mysql-python、PIL、mysql、 Apache、mode_wsgi
+
+
+** PIL 使用Image.c 替换 **
+
+
+** mysql 使用 sqlite 替换**
+
 
 6. 根目录下的 index.py 是wsgi脚本，code.py 是 web.py 自带服务器脚本。
 

@@ -1,15 +1,14 @@
 # -- coding: utf8 --
 import sys
-import os
 if sys.getdefaultencoding() != 'utf-8':
     reload(sys)
     sys.setdefaultencoding('utf-8')
-#abspath = os.path.dirname(__file__)
-#sys.path.append(abspath)
-#os.chdir(abspath)
 
-sys.path.append('/var/www/post_bar')
-os.chdir('/var/www/post_bar')
+import os
+abspath = os.path.dirname(__file__)
+sys.path.append(abspath)
+os.chdir(abspath)
+
 import web
 from config.config import *
 from config.urls import *
@@ -19,8 +18,6 @@ from models.site_model import *
 from models.user_model import *
 from models.notify_model import *
 
-#web.template.Template.globals['render'] = render
-#web.template.Template.globals['site_title'] = site_title
 web.template.Template.globals['widget'] = widget
 web.template.Template.globals['site_options'] = site_model().get_options()
 web.template.Template.globals['helper'] = helper
