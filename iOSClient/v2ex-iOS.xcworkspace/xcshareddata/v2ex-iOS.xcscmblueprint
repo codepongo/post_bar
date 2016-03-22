@@ -1,0 +1,40 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "141BC460ACB5B0F615B67F6DA38D28110B22D6A5",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "11d4ebef-b9f5-4241-a003-ae5e32e7aaa5" : {
+
+    },
+    "141BC460ACB5B0F615B67F6DA38D28110B22D6A5" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "11d4ebef-b9f5-4241-a003-ae5e32e7aaa5" : 0,
+    "141BC460ACB5B0F615B67F6DA38D28110B22D6A5" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "2036198E-CBE4-461C-8752-C0FFCA90DECB",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "11d4ebef-b9f5-4241-a003-ae5e32e7aaa5" : "..\/..",
+    "141BC460ACB5B0F615B67F6DA38D28110B22D6A5" : "v2ex-iOS\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "v2ex-iOS",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "v2ex-iOS.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/baiy-pc:8443\/svn\/Search",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "11d4ebef-b9f5-4241-a003-ae5e32e7aaa5"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/baiy-pc:8443\/svn\/Search",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "141BC460ACB5B0F615B67F6DA38D28110B22D6A5"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:codepongo\/v2ex-1",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "141BC460ACB5B0F615B67F6DA38D28110B22D6A5"
+    }
+  ]
+}
