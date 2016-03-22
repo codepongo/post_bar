@@ -341,10 +341,10 @@
 		2933868A18D67B6B00FEC28E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2933868C18D67B6B00FEC28E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		2933868E18D67B6B00FEC28E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		2933869218D67B6B00FEC28E /* v2ex-iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "v2ex-iOS-Info.plist"; sourceTree = "<group>"; };
+		2933869218D67B6B00FEC28E /* PostBar-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PostBar-Info.plist"; sourceTree = "<group>"; };
 		2933869418D67B6B00FEC28E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2933869618D67B6B00FEC28E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		2933869818D67B6B00FEC28E /* v2ex-iOS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "v2ex-iOS-Prefix.pch"; sourceTree = "<group>"; };
+		2933869818D67B6B00FEC28E /* PostBar-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PostBar-Prefix.pch"; sourceTree = "<group>"; };
 		2933869918D67B6C00FEC28E /* V2AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = V2AppDelegate.h; sourceTree = "<group>"; };
 		2933869A18D67B6C00FEC28E /* V2AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = V2AppDelegate.m; sourceTree = "<group>"; };
 		2933869C18D67B6C00FEC28E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -809,10 +809,10 @@
 		2933869118D67B6B00FEC28E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				2933869218D67B6B00FEC28E /* v2ex-iOS-Info.plist */,
+				2933869218D67B6B00FEC28E /* PostBar-Info.plist */,
 				2933869318D67B6B00FEC28E /* InfoPlist.strings */,
 				2933869618D67B6B00FEC28E /* main.m */,
-				2933869818D67B6B00FEC28E /* v2ex-iOS-Prefix.pch */,
+				2933869818D67B6B00FEC28E /* PostBar-Prefix.pch */,
 				299CEBCC1AA53313003B547B /* V2AppKeys.h */,
 				2933869918D67B6C00FEC28E /* V2AppDelegate.h */,
 				2933869A18D67B6C00FEC28E /* V2AppDelegate.m */,
@@ -1220,7 +1220,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 2933868218D67B6B00FEC28E /* Build configuration list for PBXProject "v2ex-iOS" */;
+			buildConfigurationList = 2933868218D67B6B00FEC28E /* Build configuration list for PBXProject "PostBar" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1709,8 +1709,8 @@
 					"$(PROJECT_DIR)/v2ex-iOS/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "v2ex-iOS/v2ex-iOS-Prefix.pch";
-				INFOPLIST_FILE = "v2ex-iOS/v2ex-iOS-Info.plist";
+				GCC_PREFIX_HEADER = "v2ex-iOS/PostBar-Prefix.pch";
+				INFOPLIST_FILE = "v2ex-iOS/PostBar-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1744,8 +1744,8 @@
 					"$(PROJECT_DIR)/v2ex-iOS/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "v2ex-iOS/v2ex-iOS-Prefix.pch";
-				INFOPLIST_FILE = "v2ex-iOS/v2ex-iOS-Info.plist";
+				GCC_PREFIX_HEADER = "v2ex-iOS/PostBar-Prefix.pch";
+				INFOPLIST_FILE = "v2ex-iOS/PostBar-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1779,7 +1779,7 @@
 					"$(PROJECT_DIR)/v2ex-iOS/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "v2ex-iOS/v2ex-iOS-Prefix.pch";
+				GCC_PREFIX_HEADER = "v2ex-iOS/PostBar-Prefix.pch";
 				INFOPLIST_FILE = "v2ex-iOS/v2ex-iOS-Crashlytics-info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -1815,7 +1815,7 @@
 					"$(PROJECT_DIR)/v2ex-iOS/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "v2ex-iOS/v2ex-iOS-Prefix.pch";
+				GCC_PREFIX_HEADER = "v2ex-iOS/PostBar-Prefix.pch";
 				INFOPLIST_FILE = "v2ex-iOS/v2ex-iOS-Crashlytics-info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -1838,7 +1838,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2933868218D67B6B00FEC28E /* Build configuration list for PBXProject "v2ex-iOS" */ = {
+		2933868218D67B6B00FEC28E /* Build configuration list for PBXProject "PostBar" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				293386B118D67B6C00FEC28E /* Debug */,
