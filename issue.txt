@@ -1,6 +1,0 @@
-## 1.1.0 ##
-* [ ] APIs for iOS APP
-* [ ] iOS APP Client
-
-* [ ] 合并code.py和index.py
-* [ ] README.md 增加email地址的image
