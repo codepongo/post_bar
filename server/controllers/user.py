@@ -62,13 +62,20 @@ class signup:
         self.crumb = Crumb()
         self.crumb.append('注册')
     
+        
     def GET(self):
         title = '注册'
         return render.signup(self.form, title, self.crumb.output())
     
     def POST(self):
+        ret, msg = self._post()
+        if ret:
+            return render.signup(self.form, msg, self.crumb.output())
+        else:
+            raise web.SeeOther('/')
+    def _post(self):
         if not self.form.validates():
-            return render.signup(self.form, '注册失败，请重注', self.crumb.output())
+            return False, '注册失败，请重注'
         try:
             condition = {'name':self.form.d.name}
             user = user_model().get_one(condition)
@@ -84,8 +91,8 @@ class signup:
                 raise ValueExistsError('邮箱已经存在')
             user_model().insert({'name' : self.form.d.name, 'email' : self.form.d.email, 'password' : password, 'regist_time' : time.time(), 'auth' : auth})
         except ValueExistsError, x:
-            return render.signup(self.form, x.message, self.crumb.output())
-        raise web.SeeOther('/')
+            return False, x.message
+        return True, ''
 
 # 注销
 class logout:

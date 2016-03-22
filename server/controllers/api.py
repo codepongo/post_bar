@@ -9,8 +9,15 @@ from models.cat_model import *
 from libraries.crumb import Crumb
 from libraries.pagination import *
 import json
+from controllers.user import *
 
-class json:
+class jsonapi:
     def GET(self, method):
+        pass
+    def POST(self, method):
         web.header('Content-Type', 'application/json')
-        return method
+        print '********', method, '**********'
+        if method.lower() == 'signup':
+            s = signup()
+            ret, msg = s._post()
+        return json.dumps({'ret':ret, 'msg':msg})
