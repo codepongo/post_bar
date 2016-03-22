@@ -337,7 +337,7 @@
 		29334D9218E7738A0081D3B2 /* V2MenuSectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = V2MenuSectionView.m; sourceTree = "<group>"; };
 		29334D9418E773CF0081D3B2 /* V2MenuSectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = V2MenuSectionCell.h; sourceTree = "<group>"; };
 		29334D9518E773CF0081D3B2 /* V2MenuSectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = V2MenuSectionCell.m; sourceTree = "<group>"; };
-		2933868718D67B6B00FEC28E /* v2ex-dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "v2ex-dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2933868718D67B6B00FEC28E /* PostBar-dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PostBar-dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2933868A18D67B6B00FEC28E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2933868C18D67B6B00FEC28E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		2933868E18D67B6B00FEC28E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -766,7 +766,7 @@
 		2933868818D67B6B00FEC28E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2933868718D67B6B00FEC28E /* v2ex-dev.app */,
+				2933868718D67B6B00FEC28E /* PostBar-dev.app */,
 				29C0BE401BA3A89E007B110C /* v2ex.app */,
 			);
 			name = Products;
@@ -1162,9 +1162,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		2933868618D67B6B00FEC28E /* v2ex-dev */ = {
+		2933868618D67B6B00FEC28E /* PostBar-dev */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 293386B318D67B6C00FEC28E /* Build configuration list for PBXNativeTarget "v2ex-dev" */;
+			buildConfigurationList = 293386B318D67B6C00FEC28E /* Build configuration list for PBXNativeTarget "PostBar-dev" */;
 			buildPhases = (
 				30B1C5CAFE33475AAA78B1A1 /* Check Pods Manifest.lock */,
 				2933868318D67B6B00FEC28E /* Sources */,
@@ -1177,9 +1177,9 @@
 			);
 			dependencies = (
 			);
-			name = "v2ex-dev";
+			name = "PostBar-dev";
 			productName = "v2ex-iOS";
-			productReference = 2933868718D67B6B00FEC28E /* v2ex-dev.app */;
+			productReference = 2933868718D67B6B00FEC28E /* PostBar-dev.app */;
 			productType = "com.apple.product-type.application";
 		};
 		29C0BDB21BA3A89E007B110C /* v2ex */ = {
@@ -1233,7 +1233,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				2933868618D67B6B00FEC28E /* v2ex-dev */,
+				2933868618D67B6B00FEC28E /* PostBar-dev */,
 				29C0BDB21BA3A89E007B110C /* v2ex */,
 			);
 		};
@@ -1847,7 +1847,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		293386B318D67B6C00FEC28E /* Build configuration list for PBXNativeTarget "v2ex-dev" */ = {
+		293386B318D67B6C00FEC28E /* Build configuration list for PBXNativeTarget "PostBar-dev" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				293386B418D67B6C00FEC28E /* Debug */,
