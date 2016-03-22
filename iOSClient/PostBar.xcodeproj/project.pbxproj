@@ -337,7 +337,7 @@
 		29334D9218E7738A0081D3B2 /* V2MenuSectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = V2MenuSectionView.m; sourceTree = "<group>"; };
 		29334D9418E773CF0081D3B2 /* V2MenuSectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = V2MenuSectionCell.h; sourceTree = "<group>"; };
 		29334D9518E773CF0081D3B2 /* V2MenuSectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = V2MenuSectionCell.m; sourceTree = "<group>"; };
-		2933868718D67B6B00FEC28E /* PostBar-dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PostBar-dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2933868718D67B6B00FEC28E /* PostBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PostBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2933868A18D67B6B00FEC28E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2933868C18D67B6B00FEC28E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		2933868E18D67B6B00FEC28E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -766,7 +766,7 @@
 		2933868818D67B6B00FEC28E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2933868718D67B6B00FEC28E /* PostBar-dev.app */,
+				2933868718D67B6B00FEC28E /* PostBar.app */,
 				29C0BE401BA3A89E007B110C /* v2ex.app */,
 			);
 			name = Products;
@@ -1179,7 +1179,7 @@
 			);
 			name = "PostBar-dev";
 			productName = "v2ex-iOS";
-			productReference = 2933868718D67B6B00FEC28E /* PostBar-dev.app */;
+			productReference = 2933868718D67B6B00FEC28E /* PostBar.app */;
 			productType = "com.apple.product-type.application";
 		};
 		29C0BDB21BA3A89E007B110C /* v2ex */ = {
@@ -1719,7 +1719,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = singro.v2ex;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = PostBar;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "${SDK_DIR}/usr/include/libxml2";
@@ -1754,7 +1754,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = singro.v2ex;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = PostBar;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "${SDK_DIR}/usr/include/libxml2";
