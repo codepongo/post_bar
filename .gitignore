@@ -38,10 +38,6 @@ web
 # vim temporary files
 *.swp
 
-# tools
-sqlite3.exe
-sqlite3
-r.bat
 # database file
 post_bar.db
 
