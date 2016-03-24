@@ -15,6 +15,8 @@ website and web service
 * [ ] arrange the project
 * [ ] APIs for iOS APP  
 * [ ] iOS APP Client
+* [ ] comunication between iOS APP and web service
+
 ### Progress 进度 ###
   %[]
 
@@ -26,8 +28,10 @@ website and web service
 * 
 
 ## Journal 日报 ##
-* _日期_ _内容_
-
+* 20160324 
+Manager/V2DataManager.h(m) 
+负责网络通信 v2ex API 接口 https://www.v2ex.com/p/7v9TEc53
+controller/index.py recent 热门
 ## Tip 贴士 ##
 
 
