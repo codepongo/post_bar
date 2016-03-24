@@ -25,10 +25,12 @@ static CGFloat const kContainViewYEditing = 60.0;
 @property (nonatomic, strong) UITextField *usernameField;
 @property (nonatomic, strong) UITextField *passwordField;
 @property (nonatomic, strong) UIButton    *loginButton;
+@property (nonatomic, strong) UIButton *signUp;
 
 @property (nonatomic, assign) BOOL isKeyboardShowing;
 @property (nonatomic, strong) NSTimer *loginTimer;
 @property (nonatomic, assign) BOOL isLogining;
+
 
 @end
 
@@ -81,12 +83,13 @@ static CGFloat const kContainViewYEditing = 60.0;
     self.backgroundImageView.frame = self.view.frame;
     self.closeButton.frame = (CGRect){10, 20, 44, 44};
     
-    self.containView.frame = (CGRect){0, kContainViewYNormal, kScreenWidth, 300};
+    self.containView.frame = (CGRect){0, kContainViewYNormal, kScreenWidth, 600};
     self.logoLabel.center = (CGPoint){kScreenWidth/2, 30};
     self.descriptionLabel.frame = (CGRect){20, 60, kScreenWidth - 20,70};
     self.usernameField.frame = (CGRect){60, 150, kScreenWidth - 120, 30};
     self.passwordField.frame = (CGRect){60, 190, kScreenWidth - 120, 30};
     self.loginButton.center = (CGPoint){kScreenWidth/2, 270};
+    self.signUp.center = (CGPoint){kScreenWidth/2, 270+self.loginButton.size.height};
     
 }
 
@@ -185,7 +188,7 @@ static CGFloat const kContainViewYEditing = 60.0;
     self.passwordField.clearButtonMode = UITextFieldViewModeWhileEditing;
     self.passwordField.rightViewMode = UITextFieldViewModeWhileEditing;
     [self.containView addSubview:self.passwordField];
-    
+
     self.loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.loginButton setTitle:@"登录" forState:UIControlStateNormal];
     [self.loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -196,6 +199,17 @@ static CGFloat const kContainViewYEditing = 60.0;
     self.loginButton.layer.borderColor = [UIColor colorWithWhite:0.000 alpha:0.10].CGColor;
     self.loginButton.layer.borderWidth = 0.5;
     [self.containView addSubview:self.loginButton];
+
+    self.signUp = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.signUp setTitle:@"注册" forState:UIControlStateNormal];
+    [self.signUp setTitleColor:[UIColor colorWithWhite:0.000 alpha:0.30] forState:UIControlStateNormal];
+    [self.signUp setTitleColor:[UIColor colorWithWhite:0.000 alpha:0.060] forState:UIControlStateHighlighted];
+    self.signUp.size = CGSizeMake(180, 44);
+    [self.signUp setBackgroundImage:[V2Helper getImageWithColor:[UIColor colorWithWhite:1.000 alpha:0.00] size:self.signUp.size] forState:UIControlStateNormal];
+    [self.signUp setBackgroundImage:[V2Helper getImageWithColor:[UIColor colorWithWhite:1.000 alpha:0.00] size:self.signUp.size] forState:UIControlStateHighlighted];
+    [self.containView addSubview:self.signUp];
+
+    
 
     // Handles
     @weakify(self);
@@ -238,6 +252,13 @@ static CGFloat const kContainViewYEditing = 60.0;
         
     } forControlEvents:UIControlEventTouchUpInside];
 
+    [self.signUp bk_addEventHandler:^(id sender) {
+        @strongify(self);
+        
+        [self dismissViewControllerAnimated:YES completion:^{
+        }];
+        
+    } forControlEvents:UIControlEventTouchUpInside];
 }
 
 #pragma mark - Private Methods
@@ -252,7 +273,7 @@ static CGFloat const kContainViewYEditing = 60.0;
     static NSUInteger dotCount = 0;
     dotCount = 1;
     [self.loginButton setTitle:@"登录." forState:UIControlStateNormal];
-
+    
     @weakify(self);
     self.loginTimer = [NSTimer bk_scheduledTimerWithTimeInterval:0.5 block:^(NSTimer *timer) {
         @strongify(self);
@@ -360,6 +381,7 @@ static CGFloat const kContainViewYEditing = 60.0;
             self.usernameField.y    -= 10;
             self.passwordField.y    -= 12;
             self.loginButton.y      -= 14;
+            self.signUp.y -= 14;
         }];
         self.isKeyboardShowing = YES;
     }
@@ -377,6 +399,7 @@ static CGFloat const kContainViewYEditing = 60.0;
             self.usernameField.y    += 10;
             self.passwordField.y    += 12;
             self.loginButton.y      += 14;
+            self.signUp.y           += 14;
         } completion:^(BOOL finished) {
         }];
     }
