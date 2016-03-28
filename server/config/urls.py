@@ -1,8 +1,10 @@
 # -- coding: utf8 --
 pre_fix = 'controllers.'
 urls = (
-    # 应用程序接口
-    '/api/(.*).json', pre_fix + 'api.jsonapi',
+    # 应用程序用户相关接口
+    '/api/members/(.*).json', pre_fix + 'api.member',
+    # 应用程序主题相关接口
+    '/api/topics/(.*).json', pre_fix + 'api.topic',
     # 首页
     '/index', pre_fix + 'index.index',
     # 关于

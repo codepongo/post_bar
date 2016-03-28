@@ -1,6 +1,6 @@
 import requests
 import datetime
-url_fmt = 'http://127.0.0.1:8080/api/%s.json'
+url_fmt = 'http://127.0.0.1:8080/api/members/%s.json'
 def signup():
     user = datetime.datetime.now().strftime('%Y-%m-%d_%H_%M_%S')
     print user
