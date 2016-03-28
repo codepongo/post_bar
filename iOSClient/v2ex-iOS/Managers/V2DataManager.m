@@ -79,7 +79,7 @@ typedef NS_ENUM(NSInteger, V2RequestMethod) {
     NSURL *baseUrl;
     
     if (preferHttps) {
-        baseUrl = [NSURL URLWithString:@"https://127.0.0.1:"];
+        baseUrl = [NSURL URLWithString:@"http://127.0.0.1:8080"];
     } else {
         baseUrl = [NSURL URLWithString:@"http://www.v2ex.com"];
     }
@@ -198,7 +198,7 @@ typedef NS_ENUM(NSInteger, V2RequestMethod) {
 - (NSURLSessionDataTask *)getAllNodesSuccess:(void (^)(V2NodeList *list))success
                                      failure:(void (^)(NSError *error))failure {
     
-    return [self requestWithMethod:V2RequestMethodJSONGET URLString:@"/api/nodes/all.json" parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [self requestWithMethod:V2RequestMethodJSONGET URLString:@"/api/node/all.json" parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         V2NodeList *list = [[V2NodeList alloc] initWithArray:responseObject];
         success(list);
     } failure:^(NSError *error) {
@@ -224,7 +224,7 @@ typedef NS_ENUM(NSInteger, V2RequestMethod) {
                        };
     }
     
-    return [self requestWithMethod:V2RequestMethodJSONGET URLString:@"/api/nodes/show.json" parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [self requestWithMethod:V2RequestMethodJSONGET URLString:@"/api/node/show.json" parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         V2NodeModel *model = [[V2NodeModel alloc] initWithDictionary:responseObject];
         success(model);
     } failure:^(NSError *error) {

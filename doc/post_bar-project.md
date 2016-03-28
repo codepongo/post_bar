@@ -53,6 +53,9 @@ server API
 /api/topic/delete.json
 /api/reply/post.json
 /api/reply/delete.json
+V2DataManager 从服务器获取数据
+Model 解析应答数据
+V2DataManager::getAllNodesSucess 接口未被使用
 ## Tip 贴士 ##
 
 
