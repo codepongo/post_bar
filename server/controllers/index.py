@@ -28,16 +28,20 @@ class index:
 
 class recent:
     def GET(self):
+        crumb = Crumb()
+        crumb.append('最近的主题')
+        total, posts, pagination = self._get()
+        return render.recent('最近的主题', total, crumb.output(), posts, pagination.output())
+
+    def _get(self):
         #sql = 'SELECT post_id FROM comment GROUP BY post_id ORDER BY MAX(time) DESC LIMIT 20'
         #post_ids = post_model().query_result(sql)
-        crumb = Crumb()
         limit = 50
         total = post_model().count_table()
         pagination = Pagination('/recent', total, limit = limit)
         page = pagination.true_page(web.input(p=1)['p'])
         posts = post_model().trends(limit, (page-1) * limit)
-        crumb.append('最近的主题')
-        return render.recent('最近的主题', total, crumb.output(), posts, pagination.output())
+        return total, posts, pagination
 
 class about:
     def GET(self):
