@@ -2,9 +2,11 @@
 pre_fix = 'controllers.'
 urls = (
     # 应用程序用户相关接口
-    '/api/members/(.*).json', pre_fix + 'api.member',
+    '/api/member/(.*).json', pre_fix + 'api.member',
     # 应用程序主题相关接口
-    '/api/topics/(.*).json', pre_fix + 'api.topic',
+    '/api/topic/(.*).json', pre_fix + 'api.topic',
+    # 应用程序节点相关接口
+    '/api/node/(.*).json', pre_fix + 'api.node',
     # 首页
     '/index', pre_fix + 'index.index',
     # 关于
