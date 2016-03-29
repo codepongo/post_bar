@@ -31,29 +31,36 @@ class login:
 
     def GET(self):
         return render.login(self.form, self.title, self.crumb.output())
-    
+
     def POST(self):
+        ret, msg = self._post()
+        if ret:
+            try:
+                if data['next'] is not None:
+                    raise web.SeeOther(data['next'])
+                else:
+                    raise web.SeeOther('/')
+            except KeyError:
+                raise web.SeeOther('/')
+        else:
+            return render.login(self.form, msg, self.crumb.output())
+
+    def _post(self):
         if not self.form.validates():
-            return render.login(self.form, '登录失败，请重登', self.crumb.output())
+            return False, '登录失败，请重登'
         condition = {'name' : self.form.d.name}
         # MD5加密 密码
         #condition['password'] = hashlib.md5(condition['password']).hexdigest()
         user = user_model().get_one(condition)
         if user is None:
-            return render.login(self.form, '用户名不存在', self.crumb.output())
+            return False, '用户不存在'
         auth_from_form = hashlib.md5(hashlib.md5(self.form.d.password).hexdigest() + user.auth).hexdigest()
         if auth_from_form != user.password:
-            return render.login(self.form, '密码错误', self.crumb.output())
+            return False, '密码错误'
         user_model().update_session(user.id)
         user_model().set_cookie(user.id)
         data = web.input();
-        try:
-            if data['next'] is not None:
-                raise web.SeeOther(data['next'])
-            else:
-                raise web.SeeOther('/')
-        except KeyError:
-            raise web.SeeOther('/')
+        return True, ''
 
 class signup:
 
@@ -97,9 +104,11 @@ class signup:
 # 注销
 class logout:
     
-    def GET(self):
+    def _get(self):
         session.kill()
         web.setcookie('auth', '', -1)
+    def GET(self):
+        self._get()
         raise web.SeeOther('/')
 
 # 设置

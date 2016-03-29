@@ -38,10 +38,19 @@ class topic:
 
 class member:
     def GET(self, method):
-        pass
+        web.header('Content-Type', 'application/json')
+        if method.lower() == 'logout':
+            logout()._get()
+            return json.dump({'ret':True})
+            
+
     def POST(self, method):
         web.header('Content-Type', 'application/json')
         if method.lower() == 'signup':
             s = signup()
             ret, msg = s._post()
+            return json.dumps({'ret':ret, 'msg':msg})
+        if method.lower() == 'login':
+            l = login()
+            ret, msg = l._post()
             return json.dumps({'ret':ret, 'msg':msg})
