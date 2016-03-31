@@ -23,6 +23,7 @@
 #import "UIImage+REFrosted.h"
 
 #import "V2MenuView.h"
+#import "SignUpViewController.h"
 
 static CGFloat const kMenuWidth = 240.0;
 
@@ -227,7 +228,16 @@ static CGFloat const kMenuWidth = 240.0;
         }];
         
     }];
-    
+
+    [[NSNotificationCenter defaultCenter] addObserverForName:kSignUpVCNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+        @strongify(self);
+        
+        SignUpViewController *s= [[SignUpViewController alloc] init];
+        [self presentViewController:s animated:YES completion:^{
+            ;
+        }];
+        
+    }];
 }
 
 - (void)configureGestures {
