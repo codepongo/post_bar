@@ -272,6 +272,7 @@
 		29EC2BAA18D883F300F6E966 /* V2TopicListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 29EC2BA918D883F300F6E966 /* V2TopicListCell.m */; };
 		29F2593E198B8B0A0053FC84 /* V2WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29F2593D198B8B0A0053FC84 /* V2WebViewController.m */; };
 		C5BF11E006564992BA7F1B46 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F82C9E568AED44198657ED64 /* libPods.a */; };
+		FA2F99031CAD57A600DA69B0 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA2F99021CAD57A600DA69B0 /* SignUpViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -535,6 +536,8 @@
 		A192AB4669A20ED7E832C760 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		B00458753F8F3F5F6DF15A87 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		F82C9E568AED44198657ED64 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA2F99011CAD57A600DA69B0 /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
+		FA2F99021CAD57A600DA69B0 /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -688,6 +691,8 @@
 		2927F0AC18D7D0CB00242167 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				FA2F99011CAD57A600DA69B0 /* SignUpViewController.h */,
+				FA2F99021CAD57A600DA69B0 /* SignUpViewController.m */,
 				2927F0AE18D7D0EB00242167 /* V2RootViewController.h */,
 				2927F0AF18D7D0EB00242167 /* V2RootViewController.m */,
 				2927F0BD18D7D6EC00242167 /* V2SettingViewController.h */,
@@ -1425,6 +1430,7 @@
 				2911B83C18EF171A004C757B /* V2NotificationViewController.m in Sources */,
 				294F15131BA318070002B44F /* UIImage+Cache..m in Sources */,
 				2927F09E18D7463200242167 /* V2BaseModel.m in Sources */,
+				FA2F99031CAD57A600DA69B0 /* SignUpViewController.m in Sources */,
 				294B66BB1962EE5400F74D44 /* SDWebImageDownloaderOperation.m in Sources */,
 				29CDF9D11931988900C6B952 /* SCBarButtonItem.m in Sources */,
 				29F2593E198B8B0A0053FC84 /* V2WebViewController.m in Sources */,
