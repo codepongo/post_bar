@@ -14,7 +14,7 @@ website and web service
 ## Goal 目标 1.1.0 ##
 * [ ] arrange the project
 * [ ] APIs for iOS APP  
- + [ ] 用户相关API，注册，登入，登出
+ + [ ] 用户相关API，注册，登入，登出, 签到
  + [ ] 主题相关API，发布，编辑，删除
  + [ ] 回复相关API，回复，删除
 * [ ] iOS APP Client
@@ -28,7 +28,8 @@ website and web service
   %[]
 
 ### Task 任务 ###
-* [ ] 
+* [ ] 登入，登出，签到 API开发
+* [ ] 登入，登出，签到 测试用例开发 
 
 
 ## Newfeed 动态 ##
@@ -56,6 +57,8 @@ server API
 V2DataManager 从服务器获取数据
 Model 解析应答数据
 V2DataManager::getAllNodesSucess 接口未被使用
+
+/api/mission/signin.json 签到
 ## Tip 贴士 ##
 
 

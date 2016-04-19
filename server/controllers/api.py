@@ -41,8 +41,7 @@ class member:
         web.header('Content-Type', 'application/json')
         if method.lower() == 'logout':
             logout()._get()
-            return json.dump({'ret':True})
-            
+            return json.dumps({'ret':True})
 
     def POST(self, method):
         web.header('Content-Type', 'application/json')
