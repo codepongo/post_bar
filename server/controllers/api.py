@@ -9,8 +9,10 @@ from models.cat_model import *
 from libraries.crumb import Crumb
 from libraries.pagination import *
 import json
+import controllers
 from controllers.user import *
 from controllers.index import *
+import random
 
 class node:
     def GET(self, method):
@@ -39,17 +41,30 @@ class topic:
 class member:
     def GET(self, method):
         web.header('Content-Type', 'application/json')
-        if method.lower() == 'logout':
-            logout()._get()
-            return json.dumps({'ret':True})
+        try:
+            m = getattr(controllers.user, method.lower())
+        except:
+            return json.dumps({'ret':False, 'msg', ''})
+        if m:
+            m()._get()
+        return json.dumps({'ret':True})
 
     def POST(self, method):
         web.header('Content-Type', 'application/json')
         if method.lower() == 'signup':
-            s = signup()
-            ret, msg = s._post()
+            ret, msg = signup()._post()
             return json.dumps({'ret':ret, 'msg':msg})
         if method.lower() == 'login':
-            l = login()
-            ret, msg = l._post()
+            ret, msg = login()._post()
             return json.dumps({'ret':ret, 'msg':msg})
+
+class mission:
+    def GET(self, method):
+        if method.lower() == 'signin':
+            if session.user_id is None:
+                return json.dumps({'ret':False, 'msg':'未登录'})
+            gain = random.randint(1, 100)
+            money_type_id = 7#money_type_model().get_one({'name':'post'})['id']
+            balance = user_model().update_money(session.user_id, gain)
+            money_model().insert({'user_id':session.user_id, 'money_type_id':money_type_id, 'amount':gain, 'length':0, 'balance': balance, 'foreign_id':0})
+            return json.dumps({'ret':True, 'info':{'account':balance, 'gain':gain}})

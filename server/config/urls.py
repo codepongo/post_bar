@@ -7,6 +7,8 @@ urls = (
     '/api/topic/(.*).json', pre_fix + 'api.topic',
     # 应用程序节点相关接口
     '/api/node/(.*).json', pre_fix + 'api.node',
+    # 应用程序成员任务相关接口
+    '/api/mission/(.*).json', pre_fix + 'api.mission',
     # 首页
     '/index', pre_fix + 'index.index',
     # 关于

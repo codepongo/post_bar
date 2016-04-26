@@ -28,8 +28,9 @@ website and web service
   %[]
 
 ### Task 任务 ###
-* [ ] 登入，登出，签到 API开发
-* [ ] 登入，登出，签到 测试用例开发 
+* [o] 登入，登出，签到 API开发
+* [o] 登入，登出，签到 测试用例开发 
+* [ ] iOS App 登入，登出，签到
 
 
 ## Newfeed 动态 ##
@@ -66,5 +67,7 @@ V2DataManager::getAllNodesSucess 接口未被使用
 * 
 
 ## Requirement 需求栈 ##
-* 
+* money length 和 foreign_id 可以为空
+* 校验当日签到只能一次
+* getattr 优化 api.py 的代码结构
 

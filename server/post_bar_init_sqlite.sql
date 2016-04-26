@@ -150,6 +150,8 @@ VALUES
 	(3,'comment','评论'),
 	(4,'post_thanks','感谢主题'),
 	(5,'comment_thanks','感谢评论');
+	(6,'mission_signin','每日签到');
+
 
 /*!40000 ALTER TABLE `money_type` ENABLE KEYS */;
 --UNLOCK TABLES;
