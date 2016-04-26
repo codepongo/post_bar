@@ -8,8 +8,8 @@
 
 #import "SignUpViewController.h"
 
-static CGFloat const kContainViewYNormal = 120.0;
-//static CGFloat const kContainViewYEditing = 60.0;
+static CGFloat const kContainViewYNormal = 100.0;
+static CGFloat const kContainViewYEditing = 60.0;
 
 @interface SignUpViewController ()
 
@@ -27,12 +27,13 @@ static CGFloat const kContainViewYNormal = 120.0;
 @property (nonatomic, strong) UITextField *email;
 
 @property (nonatomic, strong) UITextField *passwordField;
-@property (nonatomic, strong) UIButton    *loginButton;
+@property (nonatomic, strong) UITextField *repeat;
+
 @property (nonatomic, strong) UIButton *signUp;
 
 @property (nonatomic, assign) BOOL isKeyboardShowing;
-@property (nonatomic, strong) NSTimer *loginTimer;
-@property (nonatomic, assign) BOOL isLogining;
+@property (nonatomic, strong) NSTimer *signUpTimer;
+@property (nonatomic, assign) BOOL signingUp;
 
 
 @end
@@ -81,8 +82,8 @@ static CGFloat const kContainViewYNormal = 120.0;
     self.usernameField.frame = (CGRect){60, 150, kScreenWidth - 120, 30};
     self.email.frame = (CGRect){60, 190, kScreenWidth - 120, 30};
     self.passwordField.frame = (CGRect){60, 230, kScreenWidth - 120, 30};
-    self.loginButton.center = (CGPoint){kScreenWidth/2, 270};
-    self.signUp.center = (CGPoint){kScreenWidth/2, 270+self.loginButton.size.height};
+    self.repeat.frame = (CGRect){60, 270, kScreenWidth - 120, 30};
+    self.signUp.center = (CGPoint){kScreenWidth/2, 330};
     
 }
 
@@ -102,7 +103,6 @@ static CGFloat const kContainViewYNormal = 120.0;
     [self.view addSubview:self.closeButton];
     
     self.containView = [[UIView alloc] init];
-    self.containView.backgroundColor = [UIColor redColor];
     [self.view addSubview:self.containView];
     
     self.logoLabel = [[UILabel alloc] init];
@@ -128,20 +128,19 @@ static CGFloat const kContainViewYNormal = 120.0;
     @weakify(self);
     [self.closeButton bk_addEventHandler:^(id sender) {
         @strongify(self);
-        
-        [self dismissViewControllerAnimated:YES completion:nil];
-        
+        [self dismissViewControllerAnimated:YES completion:^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:kShowLoginVCNotification object:nil];
+        }];
     } forControlEvents:UIControlEventTouchUpInside];
     
     [self.containView bk_whenTapped:^{
-        //@strongify(self);
-        //[self hideKeyboard];
+        @strongify(self);
+        [self hideKeyboard];
     }];
     
     [self.backgroundImageView bk_whenTapped:^{
-        //@strongify(self);
-        
-        //[self hideKeyboard];
+        @strongify(self);
+        [self hideKeyboard];
         
     }];
     
@@ -195,7 +194,7 @@ static CGFloat const kContainViewYNormal = 120.0;
     self.passwordField.textAlignment = NSTextAlignmentCenter;
     self.passwordField.textColor = kFontColorBlackDark;
     self.passwordField.font = [UIFont systemFontOfSize:18];
-    self.passwordField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"密码"        attributes:@{NSForegroundColorAttributeName:[UIColor colorWithWhite:0.836 alpha:1.000],
+    self.passwordField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"输入密码"        attributes:@{NSForegroundColorAttributeName:[UIColor colorWithWhite:0.836 alpha:1.000],
                                                                                                                     NSFontAttributeName:[UIFont italicSystemFontOfSize:18]}];
     self.passwordField.secureTextEntry = YES;
     self.passwordField.keyboardType = UIKeyboardTypeASCIICapable;
@@ -206,19 +205,36 @@ static CGFloat const kContainViewYNormal = 120.0;
     self.passwordField.clearButtonMode = UITextFieldViewModeWhileEditing;
     self.passwordField.rightViewMode = UITextFieldViewModeWhileEditing;
     [self.containView addSubview:self.passwordField];
+
+    
+    self.repeat = [[UITextField alloc] init];
+    self.repeat.textAlignment = NSTextAlignmentCenter;
+    self.repeat.textColor = kFontColorBlackDark;
+    self.repeat.font = [UIFont systemFontOfSize:18];
+    self.repeat.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"重复密码"        attributes:@{NSForegroundColorAttributeName:[UIColor colorWithWhite:0.836 alpha:1.000],
+                                                                                                                    NSFontAttributeName:[UIFont italicSystemFontOfSize:18]}];
+    self.repeat.secureTextEntry = YES;
+    self.repeat.keyboardType = UIKeyboardTypeASCIICapable;
+    self.repeat.returnKeyType = UIReturnKeyGo;
+    self.repeat.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    self.repeat.autocorrectionType = UITextAutocorrectionTypeNo;
+    self.repeat.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    self.repeat.clearButtonMode = UITextFieldViewModeWhileEditing;
+    self.repeat.rightViewMode = UITextFieldViewModeWhileEditing;
+    [self.containView addSubview:self.repeat];
+
     
     
-    
-    self.loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.loginButton setTitle:@"登录" forState:UIControlStateNormal];
-    [self.loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.loginButton setTitleColor:kFontColorBlackLight forState:UIControlStateHighlighted];
-    self.loginButton.size = CGSizeMake(180, 44);
-    [self.loginButton setBackgroundImage:[V2Helper getImageWithColor:[UIColor colorWithWhite:0.000 alpha:0.30] size:self.loginButton.size] forState:UIControlStateNormal];
-    [self.loginButton setBackgroundImage:[V2Helper getImageWithColor:[UIColor colorWithWhite:0.000 alpha:0.060] size:self.loginButton.size] forState:UIControlStateHighlighted];
-    self.loginButton.layer.borderColor = [UIColor colorWithWhite:0.000 alpha:0.10].CGColor;
-    self.loginButton.layer.borderWidth = 0.5;
-    [self.containView addSubview:self.loginButton];
+//    self.loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [self.loginButton setTitle:@"登录" forState:UIControlStateNormal];
+//    [self.loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [self.loginButton setTitleColor:kFontColorBlackLight forState:UIControlStateHighlighted];
+//    self.loginButton.size = CGSizeMake(180, 44);
+//    [self.loginButton setBackgroundImage:[V2Helper getImageWithColor:[UIColor colorWithWhite:0.000 alpha:0.30] size:self.loginButton.size] forState:UIControlStateNormal];
+//    [self.loginButton setBackgroundImage:[V2Helper getImageWithColor:[UIColor colorWithWhite:0.000 alpha:0.060] size:self.loginButton.size] forState:UIControlStateHighlighted];
+//    self.loginButton.layer.borderColor = [UIColor colorWithWhite:0.000 alpha:0.10].CGColor;
+//    self.loginButton.layer.borderWidth = 0.5;
+//    [self.containView addSubview:self.loginButton];
     
     self.signUp = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.signUp setTitle:@"注册" forState:UIControlStateNormal];
@@ -227,6 +243,12 @@ static CGFloat const kContainViewYNormal = 120.0;
     self.signUp.size = CGSizeMake(180, 44);
     [self.signUp setBackgroundImage:[V2Helper getImageWithColor:[UIColor colorWithWhite:1.000 alpha:0.00] size:self.signUp.size] forState:UIControlStateNormal];
     [self.signUp setBackgroundImage:[V2Helper getImageWithColor:[UIColor colorWithWhite:1.000 alpha:0.00] size:self.signUp.size] forState:UIControlStateHighlighted];
+    
+    [self.signUp setBackgroundImage:[V2Helper getImageWithColor:[UIColor colorWithWhite:0.000 alpha:0.30] size:self.signUp.size] forState:UIControlStateNormal];
+    [self.signUp setBackgroundImage:[V2Helper getImageWithColor:[UIColor colorWithWhite:0.000 alpha:0.060] size:self.signUp.size] forState:UIControlStateHighlighted];
+    self.signUp.layer.borderColor = [UIColor colorWithWhite:0.000 alpha:0.10].CGColor;
+    self.signUp.layer.borderWidth = 0.5;
+    
     [self.containView addSubview:self.signUp];
     
     
@@ -234,9 +256,9 @@ static CGFloat const kContainViewYNormal = 120.0;
     // Handles
     @weakify(self);
     [self.usernameField setBk_shouldBeginEditingBlock:^BOOL(UITextField *textField) {
-        //@strongify(self);
+        @strongify(self);
         
-        //[self showKeyboard];
+        [self showKeyboard];
         
         return YES;
     }];
@@ -250,40 +272,203 @@ static CGFloat const kContainViewYNormal = 120.0;
     }];
     
     [self.passwordField setBk_shouldBeginEditingBlock:^BOOL(UITextField *textField) {
-        //@strongify(self);
+        @strongify(self);
         
-        //[self showKeyboard];
+        [self showKeyboard];
         
         return YES;
     }];
     
     [self.passwordField setBk_shouldReturnBlock:^BOOL(UITextField *textField) {
-        //@strongify(self);
+        @strongify(self);
         
-        //[self login];
+        [self.repeat becomeFirstResponder];
         
         return YES;
     }];
     
-    [self.loginButton bk_addEventHandler:^(id sender) {
+    [self.passwordField setBk_shouldBeginEditingBlock:^BOOL(UITextField *textField) {
+        @strongify(self);
+        
+        [self showKeyboard];
+        
+        return YES;
+    }];
+    
+    [self.repeat setBk_shouldReturnBlock:^BOOL(UITextField *textField) {
+        @strongify(self);
+        
+        [self doSignUp];
+        
+        return YES;
+    }];
+    
+    [self.signUp bk_addEventHandler:^(id sender) {
         //@strongify(self);
         
-        //[self login];
+        [self doSignUp];
         
     } forControlEvents:UIControlEventTouchUpInside];
     
-    [self.signUp bk_addEventHandler:^(id sender) {
-        @strongify(self);
-        
-        [self dismissViewControllerAnimated:YES completion:^{
-            @strongify(self);
-            [self presentViewController:[[SignUpViewController alloc]init] animated:YES completion:nil];
-            
-        }];
-        
-    } forControlEvents:UIControlEventTouchUpInside];
 }
 
+#pragma mark - Private Methods
+
+- (void)willSignUp {
+    
+    self.signingUp = YES;
+    self.usernameField.enabled = NO;
+    self.email.enabled = NO;
+    self.passwordField.enabled = NO;
+    self.repeat.enabled = NO;
+    static NSUInteger dotCount = 0;
+    dotCount = 1;
+    [self.signUp setTitle:@"注册." forState:UIControlStateNormal];
+    
+    @weakify(self);
+    self.signUpTimer = [NSTimer bk_scheduledTimerWithTimeInterval:0.5 block:^(NSTimer *timer) {
+        @strongify(self);
+        
+        if (dotCount > 3) {
+            dotCount = 0;
+        }
+        NSString *signUpString = @"注册";
+        for (int i = 0; i < dotCount; i ++) {
+            signUpString = [signUpString stringByAppendingString:@"."];
+        }
+        dotCount ++;
+        
+        [self.signUp setTitle:signUpString forState:UIControlStateNormal];
+        
+    } repeats:YES];
+    
+}
+
+- (void)didSignUp {
+    
+    self.signingUp = YES;
+    self.usernameField.enabled = NO;
+    self.email.enabled = NO;
+    self.passwordField.enabled = NO;
+    self.repeat.enabled = NO;
+    
+    [self.signUp setTitle:@"注册" forState:UIControlStateNormal];
+    
+    self.signingUp = NO;
+    
+    [self.signUpTimer invalidate];
+    self.signUpTimer = nil;
+    
+}
+
+- (void)doSignUp {
+    
+    if (!self.signingUp) {
+        
+        if (self.usernameField.text.length && self.passwordField.text.length) {
+            if ([self isValidEmail:self.usernameField.text]) {
+                //输入邮箱登录 会导致获取profile 信息失败的bug
+                [SVProgressHUD showErrorWithStatus:@"请输入用户名，而非注册邮箱"];
+                return;
+            }
+            if (![self.passwordField.text isEqualToString:self.repeat.text]) {
+                [SVProgressHUD showErrorWithStatus:@"两次输入的密码不一致"];
+            }
+            [self hideKeyboard];
+/*
+            [[V2DataManager manager] UserLoginWithUsername:self.usernameField.text password:self.passwordField.text success:^(NSString *message) {
+                
+                [[V2DataManager manager] getMemberProfileWithUserId:nil username:self.usernameField.text success:^(V2MemberModel *member) {
+                    
+                    V2UserModel *user = [[V2UserModel alloc] init];
+                    
+                    user.member = member;
+                    user.name = member.memberName;
+                    
+                    [V2DataManager manager].user = user;
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kLoginSuccessNotification object:nil];
+                    
+                    [self didSignUp];
+                    
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                    
+                } failure:^(NSError *error) {
+                    
+                    [self didSignUp];
+                    
+                }];
+                
+                
+                
+            } failure:^(NSError *error) {
+                
+                NSString *reasonString;
+                
+                if (error.code < 700) {
+                    reasonString = @"请检查网络状态";
+                } else {
+                    reasonString = @"请检查用户名或密码";
+                }
+                UIAlertView *alertView = [[UIAlertView alloc] bk_initWithTitle:@"登录失败" message:reasonString];
+                [alertView bk_setCancelButtonWithTitle:@"确定" handler:^{
+                    [self didSignUp];
+                }];
+                
+                [alertView show];
+                
+            }];
+    */
+            [self willSignUp];
+            
+        }
+        
+    }
+    
+}
+
+- (void)showKeyboard {
+    
+    if (self.isKeyboardShowing) {
+        ;
+    } else {
+        [UIView animateWithDuration:0.3 animations:^{
+            self.containView.y      = kContainViewYEditing;
+            self.descriptionLabel.y -= 5;
+            self.usernameField.y    -= 10;
+            self.passwordField.y    -= 12;
+            self.signUp.y -= 14;
+        }];
+        self.isKeyboardShowing = YES;
+    }
+    
+}
+
+- (void)hideKeyboard {
+    
+    if (self.isKeyboardShowing) {
+        self.isKeyboardShowing = NO;
+        [[UIApplication sharedApplication].keyWindow endEditing:YES];
+        [UIView animateWithDuration:0.3 animations:^{
+            self.containView.y      = kContainViewYNormal;
+            self.descriptionLabel.y += 5;
+            self.usernameField.y    += 10;
+            self.passwordField.y    += 12;
+            self.signUp.y           += 14;
+        } completion:^(BOOL finished) {
+        }];
+    }
+    
+}
+
+- (BOOL)isValidEmail:(NSString *)email{
+    if (email == nil) {
+        return NO;
+    }
+    NSString *phoneRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+    NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",phoneRegex];
+    return [phoneTest evaluateWithObject:email];
+}
 
 
 @end

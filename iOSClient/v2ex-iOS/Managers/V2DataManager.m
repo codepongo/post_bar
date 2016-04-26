@@ -825,6 +825,50 @@ typedef NS_ENUM(NSInteger, V2RequestMethod) {
 }
 
 
+-(NSURLSessionDataTask *)UserRegisterWithEMail:(NSString*)email
+                                      username:(NSString*)username
+                                      password:(NSString*)password
+                                       success:(void (^)(NSString *message))success
+                                       failure:(void (^)(NSError *error))failure {
+//    NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+//    for (NSHTTPCookie *cookie in [storage cookies]) {
+//        [storage deleteCookie:cookie];
+//    }
+//    
+//    [self requestOnceWithURLString:@"/member/register" success:^(NSString *onceString) {
+//        
+//        NSDictionary *parameters = @{
+//                                     kOnceString: onceString,
+//                                     kNextString: @"/",
+//                                     @"p": password,
+//                                     @"u": username,
+//                                     };
+//        
+//        [self.manager.requestSerializer setValue:@"http://v2ex.com/signin" forHTTPHeaderField:@"Referer"];
+//        
+//        [self requestWithMethod:V2RequestMethodHTTPPOST URLString:@"/signin" parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+//            
+//            NSString *htmlString = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+//            
+//            if ([htmlString rangeOfString:@"/notifications"].location != NSNotFound) {
+//                [[V2CheckInManager manager] resetStatus];
+//                success(username);
+//            } else {
+//                NSError *error = [[NSError alloc] initWithDomain:self.manager.baseURL.absoluteString code:V2ErrorTypeLoginFailure userInfo:nil];
+//                failure(error);
+//            }
+//            
+//        } failure:^(NSError *error) {
+//            failure(error);
+//        }];
+//    } failure:^(NSError *error) {
+//        failure(error);
+//    }];
+    return nil;
+    
+}
+
+
 #pragma mark - Public Request Methods - Login & Profile
 
 - (NSURLSessionDataTask *)UserLoginWithUsername:(NSString *)username password:(NSString *)password

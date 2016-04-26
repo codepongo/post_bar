@@ -258,8 +258,6 @@ static CGFloat const kContainViewYEditing = 60.0;
         
         [self dismissViewControllerAnimated:YES completion:^{
             [[NSNotificationCenter defaultCenter] postNotificationName:kSignUpVCNotification object:nil];
-
-            
         }];
         
     } forControlEvents:UIControlEventTouchUpInside];

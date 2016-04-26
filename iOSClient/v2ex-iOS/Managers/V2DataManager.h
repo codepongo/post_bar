@@ -171,8 +171,20 @@ typedef NS_ENUM (NSInteger, V2HotNodesType) {
                                           success:(void (^)(NSString *message))success
                                           failure:(void (^)(NSError *error))failure;
 
+#pragma mark - Register
+
+-(NSURLSessionDataTask *)UserRegisterWithEMail:(NSString*)email
+                                      username:(NSString*)username
+                                      password:(NSString*)password
+                                       success:(void (^)(NSString *message))success
+                                       failure:(void (^)(NSError *error))failure;
 
 #pragma mark - Login & Profile
+
+- (NSURLSessionDataTask *)UserRegisterWithUsername:(NSString *)username password:(NSString *)password email:(NSString*)email
+                                        success:(void (^)(NSString *message))success
+                                        failure:(void (^)(NSError *error))failure;
+
 
 - (NSURLSessionDataTask *)UserLoginWithUsername:(NSString *)username password:(NSString *)password
                                         success:(void (^)(NSString *message))success
