@@ -9,7 +9,7 @@
 #import "SignUpViewController.h"
 
 static CGFloat const kContainViewYNormal = 100.0;
-static CGFloat const kContainViewYEditing = 60.0;
+static CGFloat const kContainViewYEditing = 55.0;
 
 @interface SignUpViewController ()
 
@@ -77,13 +77,13 @@ static CGFloat const kContainViewYEditing = 60.0;
     self.closeButton.frame = (CGRect){10, 20, 44, 44};
     
     self.containView.frame = (CGRect){0, kContainViewYNormal, kScreenWidth, 600};
-    self.logoLabel.center = (CGPoint){kScreenWidth/2, 30};
-    self.descriptionLabel.frame = (CGRect){20, 60, kScreenWidth - 20,70};
-    self.usernameField.frame = (CGRect){60, 150, kScreenWidth - 120, 30};
-    self.email.frame = (CGRect){60, 190, kScreenWidth - 120, 30};
-    self.passwordField.frame = (CGRect){60, 230, kScreenWidth - 120, 30};
-    self.repeat.frame = (CGRect){60, 270, kScreenWidth - 120, 30};
-    self.signUp.center = (CGPoint){kScreenWidth/2, 330};
+    self.logoLabel.center = (CGPoint){kScreenWidth/2, 40};
+    self.descriptionLabel.frame = (CGRect){20, 50, kScreenWidth - 20,70};
+    self.usernameField.frame = (CGRect){60, 110, kScreenWidth - 120, 30};
+    self.email.frame = (CGRect){60, 150, kScreenWidth - 120, 30};
+    self.passwordField.frame = (CGRect){60, 190, kScreenWidth - 120, 30};
+    self.repeat.frame = (CGRect){60, 230, kScreenWidth - 120, 30};
+    self.signUp.center = (CGPoint){kScreenWidth/2, 290};
     
 }
 
@@ -184,12 +184,10 @@ static CGFloat const kContainViewYEditing = 60.0;
     self.email.clearButtonMode = UITextFieldViewModeWhileEditing;
     self.email.rightViewMode = UITextFieldViewModeWhileEditing;
 
-    
-    
-    
-    
     [self.containView addSubview:self.email];
     
+    
+    self.passwordField.keyboardType = UIReturnKeyNext;
     self.passwordField = [[UITextField alloc] init];
     self.passwordField.textAlignment = NSTextAlignmentCenter;
     self.passwordField.textColor = kFontColorBlackDark;
@@ -222,19 +220,6 @@ static CGFloat const kContainViewYEditing = 60.0;
     self.repeat.clearButtonMode = UITextFieldViewModeWhileEditing;
     self.repeat.rightViewMode = UITextFieldViewModeWhileEditing;
     [self.containView addSubview:self.repeat];
-
-    
-    
-//    self.loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [self.loginButton setTitle:@"登录" forState:UIControlStateNormal];
-//    [self.loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [self.loginButton setTitleColor:kFontColorBlackLight forState:UIControlStateHighlighted];
-//    self.loginButton.size = CGSizeMake(180, 44);
-//    [self.loginButton setBackgroundImage:[V2Helper getImageWithColor:[UIColor colorWithWhite:0.000 alpha:0.30] size:self.loginButton.size] forState:UIControlStateNormal];
-//    [self.loginButton setBackgroundImage:[V2Helper getImageWithColor:[UIColor colorWithWhite:0.000 alpha:0.060] size:self.loginButton.size] forState:UIControlStateHighlighted];
-//    self.loginButton.layer.borderColor = [UIColor colorWithWhite:0.000 alpha:0.10].CGColor;
-//    self.loginButton.layer.borderWidth = 0.5;
-//    [self.containView addSubview:self.loginButton];
     
     self.signUp = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.signUp setTitle:@"注册" forState:UIControlStateNormal];
@@ -266,6 +251,22 @@ static CGFloat const kContainViewYEditing = 60.0;
     [self.usernameField setBk_shouldReturnBlock:^BOOL(UITextField *textField) {
         @strongify(self);
         
+        [self.email becomeFirstResponder];
+        
+        return YES;
+    }];
+    
+    [self.email setBk_shouldBeginEditingBlock:^BOOL(UITextField *textField) {
+        @strongify(self);
+        
+        [self showKeyboard];
+        
+        return YES;
+    }];
+    
+    [self.email setBk_shouldReturnBlock:^BOOL(UITextField *textField) {
+        @strongify(self);
+        
         [self.passwordField becomeFirstResponder];
         
         return YES;
@@ -287,7 +288,7 @@ static CGFloat const kContainViewYEditing = 60.0;
         return YES;
     }];
     
-    [self.passwordField setBk_shouldBeginEditingBlock:^BOOL(UITextField *textField) {
+    [self.repeat setBk_shouldBeginEditingBlock:^BOOL(UITextField *textField) {
         @strongify(self);
         
         [self showKeyboard];
@@ -304,7 +305,7 @@ static CGFloat const kContainViewYEditing = 60.0;
     }];
     
     [self.signUp bk_addEventHandler:^(id sender) {
-        //@strongify(self);
+        @strongify(self);
         
         [self doSignUp];
         
@@ -436,8 +437,10 @@ static CGFloat const kContainViewYEditing = 60.0;
             self.containView.y      = kContainViewYEditing;
             self.descriptionLabel.y -= 5;
             self.usernameField.y    -= 10;
-            self.passwordField.y    -= 12;
-            self.signUp.y -= 14;
+            self.email.y -= 12;
+            self.passwordField.y    -= 14;
+            self.repeat.y -= 16;
+            self.signUp.y -= 18;
         }];
         self.isKeyboardShowing = YES;
     }
@@ -453,8 +456,11 @@ static CGFloat const kContainViewYEditing = 60.0;
             self.containView.y      = kContainViewYNormal;
             self.descriptionLabel.y += 5;
             self.usernameField.y    += 10;
-            self.passwordField.y    += 12;
-            self.signUp.y           += 14;
+            self.email.y += 12;
+            self.passwordField.y    += 14;
+            self.repeat.y += 16;
+            self.signUp.y           += 18;
+            
         } completion:^(BOOL finished) {
         }];
     }
