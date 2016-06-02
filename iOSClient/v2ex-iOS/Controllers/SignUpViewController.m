@@ -376,9 +376,11 @@ static CGFloat const kContainViewYEditing = 55.0;
                 [SVProgressHUD showErrorWithStatus:@"两次输入的密码不一致"];
             }
             [self hideKeyboard];
+            [self willSignUp];
+
+
+            [[V2DataManager manager] UserRegisterWithEMail:self.email.text username:self.usernameField.text password:self.passwordField.text success:^(NSString *message) {
 /*
-            [[V2DataManager manager] UserLoginWithUsername:self.usernameField.text password:self.passwordField.text success:^(NSString *message) {
-                
                 [[V2DataManager manager] getMemberProfileWithUserId:nil username:self.usernameField.text success:^(V2MemberModel *member) {
                     
                     V2UserModel *user = [[V2UserModel alloc] init];
@@ -401,7 +403,7 @@ static CGFloat const kContainViewYEditing = 55.0;
                 }];
                 
                 
-                
+               */
             } failure:^(NSError *error) {
                 
                 NSString *reasonString;
@@ -419,8 +421,6 @@ static CGFloat const kContainViewYEditing = 55.0;
                 [alertView show];
                 
             }];
-    */
-            [self willSignUp];
             
         }
         

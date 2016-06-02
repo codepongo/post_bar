@@ -31,7 +31,7 @@ website and web service
 * [o] 登入，登出，签到 API开发
 * [o] 登入，登出，签到 测试用例开发 
 * [ ] iOS App 登入，登出，签到
-
+* [ ] 更换图标
 
 ## Newfeed 动态 ##
 * 
